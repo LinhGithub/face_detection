@@ -8,6 +8,7 @@ from numpy import inexact
 
 BASE_DIR = os.getcwd()
 dir_path = os.path.join(BASE_DIR, 'test_image')
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 def crop_image(dir_image):
     image = face_recognition.load_image_file(dir_image)
@@ -24,6 +25,10 @@ def crop_image(dir_image):
         #     top, right, bottom, left))
 
         # luu anh
+        path_folder = basedir+'/image_detection'
+        if not os.path.exists(path_folder):
+                os.mkdir(path_folder)
+        
         name_image = ''
         location_1 = 0
         try:
@@ -37,12 +42,12 @@ def crop_image(dir_image):
             location_2 = name_image.rindex('.')
             name_image = name_image[:location_2]
         face_image = image[top:bottom, left:right]
-        name_image_detection = '{}{}{}.png'.format('D:/Baitapcacmon/Laptrinhhethong/face/image_detection/',name_image+'_pic', index)
+        name_image_detection = '{}{}{}.png'.format('D:/Baitapcacmon/Laptrinhhethong/face_detection/image_detection/',name_image+'_pic', index)
         dict_info = {}
         dict_info['file_path'] = name_image_detection
         dict_info['note'] = 'Ảnh khuôn mặt thứ ' + str(index+1) + ' cắt từ ' + dir_image[location_1:]
         lst_image_detection.append(dict_info)
-        Image.fromarray(face_image).save('{}{}{}.png'.format('D:/Baitapcacmon/Laptrinhhethong/face/image_detection/',name_image+'_pic', index))
+        Image.fromarray(face_image).save('{}{}{}.png'.format('D:/Baitapcacmon/Laptrinhhethong/face_detection/image_detection/',name_image+'_pic', index))
         index+=1
 
         # truy cập ảnh
